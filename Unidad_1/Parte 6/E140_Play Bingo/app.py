@@ -29,7 +29,7 @@ def simular_juego_bingo():
     cruzar = set()
 
     for llamada in llamadas:
-        hoja, numero = llamada[:-1], int(llamada[:-1])
+        hoja, numero = llamada[:-1], int(llamada[:1])
         if numero in carta[hoja]:
             carta[hoja][carta[hoja].index(numero)] = 0
             cruzar.add(llamada)
@@ -57,14 +57,26 @@ def bingo_ganador(carta):
     return False
 
 
-def min():
+def main():
     num_juego = 1000
     total_llamadas = 0
     min_llamadas = float('inf')
     max_llamadas = 0
 
-    for _ in random(num_juego):
+    for _ in range(num_juego):
         llamads_req = simular_juego_bingo()
         total_llamadas += llamads_req
 
-         
+        if llamads_req != -1:
+            min_llamadas = min(min_llamadas, llamads_req)
+            max_llamadas = max(max_llamadas, llamads_req)
+
+    promedio_llamadas = total_llamadas/num_juego if num_juego > 0 else 0
+
+    print(f"Llamadas mininas ganadoras: {min_llamadas}")
+    print(f"Llamadas maximas ganadoras: {max_llamadas}")
+    print(f"Llamadas promedio ganadoras: {promedio_llamadas}")
+
+
+if __name__ == "__main__":
+    main()
